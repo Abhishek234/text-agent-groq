@@ -6,9 +6,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize the client with Groq configuration
+api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
+if not api_key:
+    print("❌ No API key found! Please set GROQ_API_KEY or OPENAI_API_KEY environment variable.")
+    exit(1)
+
 client = OpenAI(
     base_url="https://api.groq.com/openai/v1",
-    api_key=os.getenv("GROQ_API_KEY")
+    api_key=api_key
 )
 
 try:

@@ -6,7 +6,14 @@ from dotenv import load_dotenv
 # Load env variables
 load_dotenv()
 openai.api_base = "https://api.groq.com/openai/v1"
-openai.api_key = os.getenv("GROQ_API_KEY")
+
+# Get API key from environment variables (try both names)
+api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
+if not api_key:
+    st.error("❌ No API key found! Please set GROQ_API_KEY or OPENAI_API_KEY in Streamlit secrets.")
+    st.stop()
+
+openai.api_key = api_key
 
 # Available tasks
 task_options = {
